@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { RoomsComponent } from './rooms/rooms.component';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'hotelapp';
+  title = 'hotelInventory';
+
+  @ViewChild('name', { static: true }) name!: ElementRef;
+
+  ngOnInit() {
+    this.name.nativeElement.innerText = "Something!";
+  }
+  // @ViewChild('user', { read: ViewContainerRef }) vcr!: ViewContainerRef;
+
+  // ngAfterViewInit(){
+  //   const componentRef = this.vcr.createComponent(RoomsComponent);
+  //   componentRef.instance.numberOfRooms = 50;
+  // }
 }
