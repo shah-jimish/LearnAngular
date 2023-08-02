@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, SkipSelf, ViewChild, ViewChildren } from '@angular/core';
 import { Room, RoomList } from './rooms';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
@@ -32,7 +32,7 @@ export class RoomsComponent {
 
   title = "Room List";
 
-  constructor(private roomService:RoomsService) { }
+  constructor(@SkipSelf() private roomService:RoomsService) { }
 
   ngOnInit(): void {
     this.roomList = this.roomService.getRooms();
