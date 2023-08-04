@@ -76,7 +76,7 @@ export class RoomsComponent {
 
   addRoom() {
     const room: RoomList = {
-      roomNumber: '4',
+      //roomNumber: '4',
       roomType: "new added",
       amenities: "something",
       price: 1500,
@@ -85,8 +85,33 @@ export class RoomsComponent {
       checkOutTime: new Date('23-June-2023'),
       rating: 4.6
     };
-    this.roomList = [...this.roomList, room];
+    this.roomService.addRoom(room).subscribe((data)=>{
+      this.roomList = data;
+    });
   }
+
+  editRoom(){
+    const room: RoomList = {
+      roomNumber: '3',
+      roomType: "new added",
+      amenities: "something",
+      price: 1500,
+      photo: "https://images.unsplash.com/photo-1618773928121-c32242e63f39",
+      checkInTime: new Date('22-June-2023'),
+      checkOutTime: new Date('23-June-2023'),
+      rating: 4.6
+    };
+    this.roomService.editRoom(room).subscribe((data)=>{
+      this.roomList = data;
+    });
+  }
+
+  deleteRoom(){
+    this.roomService.deleteRoom('3').subscribe((data)=>{
+      this.roomList = data;
+    })
+  }
+
 
   ngDestroy(){
     console.log("on destroy called");
