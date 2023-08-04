@@ -3,6 +3,7 @@ import { Room, RoomList } from './rooms';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './service/rooms.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-rooms',
@@ -25,6 +26,15 @@ export class RoomsComponent {
 
   roomList: RoomList[] = [];
 
+  stream = new Observable(observer=>{
+    observer.next('user1');
+    observer.next('user2');
+    observer.next('user3');
+    observer.next('user4');
+    observer.complete();
+    //observer.error('error');
+  });
+
   @ViewChild(HeaderComponent) headerComponent!: HeaderComponent;
 
   @ViewChildren(HeaderComponent) headerChildrenComponent!:QueryList<HeaderComponent>;  
@@ -35,7 +45,11 @@ export class RoomsComponent {
   constructor(@SkipSelf() private roomService:RoomsService) { }
 
   ngOnInit(): void {
-    this.roomList = this.roomService.getRooms();
+    this.stream.subscribe((data)=>console.log(data));
+    this.stream.subscribe((data)=>console.log(data));
+    this.roomService.getRooms().subscribe(rooms=>{
+      this.roomList = rooms;
+    });
   }
 
   ngDoCheck() {
@@ -62,7 +76,7 @@ export class RoomsComponent {
 
   addRoom() {
     const room: RoomList = {
-      roomNumber: 4,
+      roomNumber: '4',
       roomType: "new added",
       amenities: "something",
       price: 1500,
